@@ -1,0 +1,108 @@
+/* Design System para Artes Técnicas (DT) SP Irrigação */
+
+:root {
+  --sp-blue: #3B82F6;
+  --sp-dark: #1F2937;
+  --sp-white: #FFFFFF;
+  --sp-wave-height: 120px;
+}
+
+.dt-container {
+  width: 1000px;
+  height: 1000px;
+  background: var(--sp-white);
+  position: relative;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+/* Footer Wave */
+.dt-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--sp-wave-height);
+  background: var(--sp-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.dt-footer-name {
+  color: white;
+  font-size: 42px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Droplet Icon */
+.dt-icon-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 180px;
+  height: 180px;
+  z-index: 20;
+}
+
+/* Schematic Area */
+.dt-schematic {
+  width: 100%;
+  height: calc(100% - var(--sp-wave-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px;
+}
+
+/* Technical Labels */
+.dt-label {
+  position: absolute;
+  font-size: 18px;
+  color: var(--sp-dark);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.dt-dimension-line {
+  stroke: #666;
+  stroke-width: 1.5;
+  fill: none;
+}
+.dt-overlay-container {
+  position: relative;
+  width: 100%;
+  height: 450px; /* Alinhado à altura da imagem original */
+}
+
+.dt-symbols {
+  position: absolute;
+  top: 28.5%; /* Distribuidor: linha Material vai de 28% a 34% */
+  right: 12%; /* Exatamente ao lado direito do comprimento do texto */
+  display: flex;
+  flex-direction: column; /* Um em cima do outro */
+  gap: 2px;
+  z-index: 100 !important;
+}
+
+.dt-symbols.chula {
+  top: 34.5%; /* Conector Chula: linha Material vai de 34% a 40% */
+  right: 12%;
+}
+
+.dt-overlay-container .dt-symbol {
+  width: 25px !important; /* Tamanho reduzido para caberem ambos na altura da linha */
+  height: 25px !important;
+  object-fit: contain !important;
+  /* Sem fundo, sombra ou borda. Mix-blend-mode derrete o branco nativo do JPG/PNG na cor cinza da tabela */
+  background: transparent !important; 
+  mix-blend-mode: multiply !important; 
+  padding: 0 !important;
+  box-shadow: none !important;
+  filter: none !important; 
+}
+
