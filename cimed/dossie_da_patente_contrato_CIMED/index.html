@@ -9,6 +9,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJXBPC1XCS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EJXBPC1XCS', {
+      page_title: 'Portal Oficial Patente INPI e Contrato CIMED',
+      page_location: window.location.href
+    });
+
+    function trackGA(eventName, eventParams) {
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', eventName, eventParams || {});
+        }
+      } catch (e) {}
+    }
+  </script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -341,6 +361,27 @@
       display: block;
     }
 
+    /* Oculta qualquer Badge, Drawer, Tag ou Banner da Netlify */
+    [id*="netlify"], 
+    [class*="netlify"], 
+    netlify-drawer, 
+    #netlify-drawer,
+    .netlify-badge,
+    div[data-netlify-badge],
+    div[class*="badge"],
+    iframe[src*="netlify"],
+    iframe[id*="netlify"],
+    iframe[title*="Netlify"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      width: 0 !important;
+      position: absolute !important;
+      z-index: -99999 !important;
+    }
+
     /* Responsivo para Celular */
     @media (max-width: 768px) {
       .split-overlay {
@@ -388,7 +429,7 @@
           </button>
 
           <!-- 2. Abrir em nova aba -->
-          <a class="dropdown-item" href="docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf#toolbar=1&navpanes=0&pagemode=none&view=FitH" target="_blank">
+          <a class="dropdown-item" href="docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf#toolbar=1&navpanes=0&pagemode=none&view=FitH" target="_blank" onclick="trackGA('abrir_nova_aba', { documento: 'Dossie INPI' })">
             <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             <div class="item-text">
               <span class="item-title">Abrir em Nova Aba</span>
@@ -397,7 +438,7 @@
           </a>
 
           <!-- 3. Baixar PDF oficial sem a taxa -->
-          <a class="dropdown-item" href="docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf" download="INPI_BR_202026029451-4_Dossie_Oficial.pdf">
+          <a class="dropdown-item" href="docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf" download="INPI_BR_202026029451-4_Dossie_Oficial.pdf" onclick="trackGA('download_dossie_inpi', { formato: 'PDF' })">
             <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <div class="item-text">
               <span class="item-title">Baixar Dossiê Completo</span>
@@ -429,7 +470,7 @@
           </button>
 
           <!-- 2. Abrir em nova aba -->
-          <a class="dropdown-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf#toolbar=1&navpanes=0&pagemode=none&view=FitH" target="_blank">
+          <a class="dropdown-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf#toolbar=1&navpanes=0&pagemode=none&view=FitH" target="_blank" onclick="trackGA('abrir_nova_aba', { documento: 'Contrato CIMED' })">
             <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             <div class="item-text">
               <span class="item-title">Abrir em Nova Aba</span>
@@ -438,7 +479,7 @@
           </a>
 
           <!-- 3. Baixar PDF oficial do contrato -->
-          <a class="dropdown-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf" download="Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf">
+          <a class="dropdown-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf" download="Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf" onclick="trackGA('download_contrato_pdf', { formato: 'PDF' })">
             <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <div class="item-text">
               <span class="item-title">Baixar Contrato (PDF)</span>
@@ -448,7 +489,7 @@
           </a>
 
           <!-- 4. Baixar Word .DOCX do contrato -->
-          <a class="dropdown-item word-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.docx" download="Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.docx">
+          <a class="dropdown-item word-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.docx" download="Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.docx" onclick="trackGA('download_contrato_docx', { formato: 'DOCX' })">
             <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
             <div class="item-text">
               <span class="item-title">Baixar Minuta no Word (.DOCX)</span>
@@ -522,6 +563,11 @@
       const filename = url.split('/').pop();
       document.getElementById('previewDownloadBtn').setAttribute('download', filename);
 
+      trackGA('visualizar_documento_tela_cheia', {
+        documento_titulo: title,
+        documento_arquivo: filename
+      });
+
       document.getElementById('previewModal').classList.add('active');
     }
 
@@ -536,6 +582,20 @@
         document.querySelectorAll('.dropdown-tag').forEach(tag => tag.classList.remove('open'));
       }
     });
+
+    // Remove qualquer tag/badge/drawer da Netlify injetada na página
+    function purgeNetlifyBadge() {
+      document.querySelectorAll('netlify-drawer, #netlify-drawer, .netlify-badge, [id*="netlify"], [class*="netlify"], iframe[src*="netlify"]').forEach(function(el) {
+        try { el.remove(); } catch(e) {}
+      });
+    }
+    purgeNetlifyBadge();
+    window.addEventListener('DOMContentLoaded', purgeNetlifyBadge);
+    window.addEventListener('load', purgeNetlifyBadge);
+    try {
+      var netlifyObs = new MutationObserver(purgeNetlifyBadge);
+      netlifyObs.observe(document.documentElement, { childList: true, subtree: true });
+    } catch(e) {}
   </script>
 
 </body>
