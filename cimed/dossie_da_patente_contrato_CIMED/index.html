@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patente BR 20 2026 029451 4 • CIMED</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+    }
+
+    /* Imagem de Fundo 100% limpa e visível */
+    .background-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('assets/site_background.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    /* Grid com 2 metades (Esquerda: Fig 8 | Direita: Assinatura) */
+    .split-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      pointer-events: none; /* Deixa a imagem 100% livre, só as tags recebem clique */
+    }
+
+    /* Centro exato de cada metade */
+    .tag-anchor {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Tag Pequena e Elegante com Efeito Glass */
+    .dropdown-tag {
+      pointer-events: auto;
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tag-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      background: rgba(11, 85, 115, 0.94);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 50px;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    /* Tag do lado Dossiê INPI (Azul de Alto Destaque com Glow) */
+    .tag-button.inpi-style {
+      background: rgba(11, 45, 65, 0.94);
+      border: 1px solid rgba(0, 210, 255, 0.55);
+    }
+
+    .tag-button:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .tag-button.inpi-style:hover {
+      border-color: rgba(0, 225, 255, 1);
+      box-shadow: 0 15px 30px -5px rgba(0, 190, 255, 0.45), 0 0 22px rgba(0, 210, 255, 0.4);
+    }
+
+    /* Tag do lado Cimed em tom de destaque corporativo (Amarelo Glow) */
+    .tag-button.cimed-style {
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(248, 195, 0, 0.6);
+    }
+
+    .tag-button.cimed-style:hover {
+      border-color: rgba(248, 195, 0, 1);
+      box-shadow: 0 15px 30px -5px rgba(248, 195, 0, 0.45), 0 0 22px rgba(248, 195, 0, 0.4);
+    }
+
+    .tag-button .arrow-icon {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.25s ease;
+      stroke-width: 2.5;
+    }
+
+    /* Seta vira para cima quando aberto */
+    .dropdown-tag.open .arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Menu Suspenso que abre com a seta */
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      padding: 8px;
+      min-width: 290px;
+      box-shadow: 0 20px 45px -8px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px) scale(0.96);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dropdown-tag.open .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: #0f172a;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      text-align: left;
+      width: 100%;
+    }
+
+    .dropdown-item:hover {
+      background: #f1f5f9;
+      color: #0b5573;
+      transform: translateX(3px);
+    }
+
+    .dropdown-item .item-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: #0b5573;
+    }
+
+    .dropdown-item.word-item .item-icon {
+      color: #2b579a;
+    }
+
+    .item-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-title {
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .item-meta {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .item-download-icon {
+      margin-left: auto;
+      width: 16px;
+      height: 16px;
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    .dropdown-item:hover .item-download-icon {
+      color: #0b5573;
+    }
+
+    /* ========================================================
+       VISUALIZADOR DIRETO EM TELA CHEIA 100% BORDA A BORDA
+       (Sem margens, sem molduras, preenchendo a janela inteira)
+       ======================================================== */
+    .preview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0f172a;
+      z-index: 99999;
+      pointer-events: auto;
+      padding: 0;
+      margin: 0;
+      border: none;
+    }
+
+    .preview-modal.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-bar {
+      height: 48px;
+      min-height: 48px;
+      padding: 0 16px 0 20px;
+      background: #0b5573;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    .preview-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .preview-title-wrap svg {
+      flex-shrink: 0;
+    }
+
+    .preview-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .preview-btn {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .preview-btn:hover {
+      background: rgba(255, 255, 255, 0.28);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .preview-btn-download {
+      background: #f8c300;
+      color: #0f172a;
+      border: 1px solid #f8c300;
+      font-weight: 700;
+    }
+
+    .preview-btn-download:hover {
+      background: #ffd633;
+      border-color: #ffd633;
+      color: #000000;
+    }
+
+    .preview-close {
+      background: #ef4444;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .preview-close:hover {
+      background: #dc2626;
+      transform: scale(1.02);
+    }
+
+    .preview-iframe {
+      width: 100vw;
+      height: calc(100vh - 48px);
+      border: none;
+      background: #525659;
+      display: block;
+    }
+
+    /* Responsivo para Celular */
+    @media (max-width: 768px) {
+      .split-overlay {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+      .dropdown-menu {
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px) scale(0.96);
+      }
+      .dropdown-tag.open .dropdown-menu {
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+      .preview-btn-tab {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Imagem de Fundo Completa e Desimpedida -->
+  <div class="background-container"></div>
+
+  <!-- 2. Overlay com as duas tags centralizadas em cada metade -->
+  <div class="split-overlay">
+
+    <!-- METADE ESQUERDA: TAG DA FIGURA 08 (PATENTE INPI) -->
+    <div class="tag-anchor">
+      <div class="dropdown-tag" id="tagLeft">
+        <button class="tag-button inpi-style" onclick="toggleDropdown('tagLeft', event)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Dossiê da Patente (INPI)</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+
+        <div class="dropdown-menu">
+          <!-- 1. Visualizar direto na página inteira (Tela Cheia sem laterais) -->
+          <button class="dropdown-item" onclick="openPreview('docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf', 'Dossiê Técnico da Patente • BR 20 2026 029451 4')">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            <div class="item-text">
+              <span class="item-title">Visualizar na Página Inteira</span>
+              <span class="item-meta">Abre na tela toda, sem barras laterais</span>
+            </div>
+          </button>
+
+          <!-- 2. Abrir em nova aba -->
+          <a class="dropdown-item" href="docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf#toolbar=1&navpanes=0&pagemode=none&view=FitH" target="_blank">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <div class="item-text">
+              <span class="item-title">Abrir em Nova Aba</span>
+              <span class="item-meta">Visualizar em guia separada do navegador</span>
+            </div>
+          </a>
+
+          <!-- 3. Baixar PDF oficial sem a taxa -->
+          <a class="dropdown-item" href="docs/INPI_BR_202026029451_4_Dossie_Oficial.pdf" download="INPI_BR_202026029451-4_Dossie_Oficial.pdf">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div class="item-text">
+              <span class="item-title">Baixar Dossiê Completo</span>
+              <span class="item-meta">PDF Oficial INPI • 19 páginas</span>
+            </div>
+            <svg class="item-download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- METADE DIREITA: TAG DO CONTRATO CIMED -->
+    <div class="tag-anchor">
+      <div class="dropdown-tag" id="tagRight">
+        <button class="tag-button cimed-style" onclick="toggleDropdown('tagRight', event)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f8c300" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Contrato CIMED</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+
+        <div class="dropdown-menu">
+          <!-- 1. Visualizar direto na página inteira (Tela Cheia sem laterais) -->
+          <button class="dropdown-item" onclick="openPreview('docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf', 'Contrato de Licenciamento Exclusivo • CIMED & Edgar Bezerril')">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            <div class="item-text">
+              <span class="item-title">Visualizar na Página Inteira</span>
+              <span class="item-meta">Abre na tela toda, sem barras laterais</span>
+            </div>
+          </button>
+
+          <!-- 2. Abrir em nova aba -->
+          <a class="dropdown-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf#toolbar=1&navpanes=0&pagemode=none&view=FitH" target="_blank">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <div class="item-text">
+              <span class="item-title">Abrir em Nova Aba</span>
+              <span class="item-meta">Visualizar em guia separada do navegador</span>
+            </div>
+          </a>
+
+          <!-- 3. Baixar PDF oficial do contrato -->
+          <a class="dropdown-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf" download="Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.pdf">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div class="item-text">
+              <span class="item-title">Baixar Contrato (PDF)</span>
+              <span class="item-meta">Minuta oficial para análise jurídica</span>
+            </div>
+            <svg class="item-download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          </a>
+
+          <!-- 4. Baixar Word .DOCX do contrato -->
+          <a class="dropdown-item word-item" href="docs/Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.docx" download="Contrato_Licenciamento_Exclusivo_CIMED_Patente_BR2020260294514.docx">
+            <svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+            <div class="item-text">
+              <span class="item-title">Baixar Minuta no Word (.DOCX)</span>
+              <span class="item-meta">Arquivo aberto e 100% editável</span>
+            </div>
+            <svg class="item-download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================================
+       VISUALIZADOR DIRETO EM TELA CHEIA (100% Borda a Borda)
+       ======================================================== -->
+  <div id="previewModal" class="preview-modal">
+    <div class="preview-bar">
+      <div class="preview-title-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span id="previewTitle">Documento Oficial</span>
+      </div>
+      <div class="preview-actions">
+        <a id="previewOpenTabBtn" class="preview-btn preview-btn-tab" href="#" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Abrir em Nova Aba
+        </a>
+        <a id="previewDownloadBtn" class="preview-btn preview-btn-download" href="#" download>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar Arquivo
+        </a>
+        <button class="preview-close" onclick="closePreview()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Fechar
+        </button>
+      </div>
+    </div>
+    <iframe id="previewIframe" class="preview-iframe" src="about:blank"></iframe>
+  </div>
+
+  <script>
+    function toggleDropdown(tagId, event) {
+      event.stopPropagation();
+      const target = document.getElementById(tagId);
+      const isCurrentlyOpen = target.classList.contains('open');
+
+      document.querySelectorAll('.dropdown-tag').forEach(tag => tag.classList.remove('open'));
+
+      if (!isCurrentlyOpen) {
+        target.classList.add('open');
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown-tag')) {
+        document.querySelectorAll('.dropdown-tag').forEach(tag => tag.classList.remove('open'));
+      }
+    });
+
+    function openPreview(url, title) {
+      document.querySelectorAll('.dropdown-tag').forEach(tag => tag.classList.remove('open'));
+      document.getElementById('previewTitle').textContent = title;
+      
+      // Abre com FitH (largura horizontal preenchida) e navpanes=0 (sem miniaturas na lateral)
+      const fullUrl = url + '#toolbar=1&navpanes=0&pagemode=none&view=FitH';
+      
+      document.getElementById('previewIframe').src = fullUrl;
+      document.getElementById('previewDownloadBtn').href = url;
+      document.getElementById('previewOpenTabBtn').href = fullUrl;
+      
+      const filename = url.split('/').pop();
+      document.getElementById('previewDownloadBtn').setAttribute('download', filename);
+
+      document.getElementById('previewModal').classList.add('active');
+    }
+
+    function closePreview() {
+      document.getElementById('previewIframe').src = 'about:blank';
+      document.getElementById('previewModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closePreview();
+        document.querySelectorAll('.dropdown-tag').forEach(tag => tag.classList.remove('open'));
+      }
+    });
+  </script>
+
+</body>
+</html>
