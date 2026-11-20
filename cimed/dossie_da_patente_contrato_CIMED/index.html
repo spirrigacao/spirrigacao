@@ -9,19 +9,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJXBPC1XCS"></script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-W6KQ2MR2');</script>
+  <!-- End Google Tag Manager -->
+
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-W6KQ2MR2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-EJXBPC1XCS', {
-      page_title: 'Portal Oficial Patente INPI e Contrato CIMED',
-      page_location: window.location.href
-    });
 
     function trackGA(eventName, eventParams) {
       try {
+        window.dataLayer = window.dataLayer || [];
+        var payload = Object.assign({ event: eventName }, eventParams || {});
+        window.dataLayer.push(payload);
         if (typeof gtag === 'function') {
           gtag('event', eventName, eventParams || {});
         }
@@ -402,6 +408,11 @@
   </style>
 </head>
 <body>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W6KQ2MR2"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <!-- 1. Imagem de Fundo Completa e Desimpedida -->
   <div class="background-container"></div>
